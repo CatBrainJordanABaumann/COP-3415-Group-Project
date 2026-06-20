@@ -3,6 +3,7 @@
 
 class Edge
 {
+    
 };
 
 #endif
