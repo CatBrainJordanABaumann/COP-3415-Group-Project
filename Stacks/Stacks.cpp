@@ -11,12 +11,10 @@
     template <typename T>
     void Stack<T>::push(T value)
     {
-        StackNode<T>* temp = new StackNode<T>;
-
-        temp->data = value;
-        temp->next = topNode;
+        Node<T>* temp = new Node<T>(value,topNode);
 
         topNode = temp;
+
         stackSize++;
     }
     
@@ -24,19 +22,19 @@
     template <typename T>
     void Stack<T>::pop()
     {
-    if(isEmpty())
-    {
-        return;
-    }
+        if(isEmpty())
+        {
+            return;
+        }
 
-    StackNode<T>* temp = topNode;
+        Node<T>* temp = topNode;
 
-    topNode = topNode->next;
+        topNode = topNode->next;
 
-    delete temp;
+        delete temp;
 
-    stackSize--;  
-    }
+        stackSize--;  
+        }
     
     //returns item in the top node
     template <typename T>

@@ -13,7 +13,7 @@ Queue<T>::Queue()
 template <typename T>
 void Queue<T>::enqueue(T value)
 {
-    QueueNode<T>* temp = new QueueNode<T>(value);
+    Node<T>* temp = new Node<T>(value);
 
     if(isEmpty())
     {
@@ -37,7 +37,7 @@ void Queue<T>::dequeue()
         return;
     }
 
-    QueueNode<T>* temp = front;
+    Node<T>* temp = front;
 
     front = front->next;
 

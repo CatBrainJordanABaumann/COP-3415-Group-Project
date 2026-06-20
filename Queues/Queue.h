@@ -1,28 +1,16 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-//stores data and pointer to next node
-template <typename T>
-struct QueueNode
-{
-    T data;
-    QueueNode<T>* next;
-    //Node constructor
-    QueueNode(T d)
-    {
-        data = d;
-        next = nullptr;
-    }
-};
+#include "Node.h"
 
 template <typename T>
 class Queue
 {
 private:
     
-    QueueNode<T>* front;
+    Node<T>* front;
         
-    QueueNode<T>* rear;
+    Node<T>* rear;
         
     int queueSize;
 

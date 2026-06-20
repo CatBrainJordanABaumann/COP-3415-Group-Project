@@ -1,19 +1,14 @@
 #ifndef STACK_H
 #define STACK_H
 
-//stores data and pointer for next node in stack
-template <typename T>
-struct StackNode {
-    T data;
-    StackNode<T>* next;
-};
+#include "Node.h"
 
 template <typename T>
 class Stack
 {
 
 private:
-    StackNode<T>* topNode;
+    Node<T>* topNode;
     int stackSize;
 public:
     //stack functions
