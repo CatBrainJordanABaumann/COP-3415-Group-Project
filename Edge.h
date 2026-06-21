@@ -1,9 +1,7 @@
-#ifndef EDGE_H
-#define EDGE_H
+#pragma once
 
 class Edge
 {
-    
+private:
+    int startIndex, endIndex, weight;
 };
-
-#endif

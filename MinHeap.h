@@ -1,6 +1,6 @@
 #pragma once
 
-constexpr int DEFAULT_MAX_HEAP_SIZE = 1000;
+constexpr int DEFAULT_MAX_HEAP_CAPACITY = 1000;
 
 template <typename T>
 class MinHeap
@@ -17,8 +17,8 @@ private:
     void percolateUp(int index);
 
 public:
-    MinHeap(int capacity = DEFAULT_MAX_HEAP_SIZE);
-    MinHeap(T* data, int size, int capacity = DEFAULT_MAX_HEAP_SIZE);
+    MinHeap(int capacity = DEFAULT_MAX_HEAP_CAPACITY);
+    MinHeap(T* data, int size, int capacity = DEFAULT_MAX_HEAP_CAPACITY);
     
     bool empty() const;
 
@@ -28,3 +28,5 @@ public:
 
     void print() const;
 };
+
+#include "MinHeap.tpp"

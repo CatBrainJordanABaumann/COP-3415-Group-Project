@@ -1,3 +1,5 @@
+#pragma once
+
 #include "MinHeap.h"
 #include <iostream>
 #include <cstring>
