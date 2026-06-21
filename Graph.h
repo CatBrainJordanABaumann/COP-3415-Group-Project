@@ -30,6 +30,12 @@ public:
     //adds a flight connection with distance and cost set as weights
     void pushEdge(int index1, int index2, int distance, int cost);
 
+    //returns the count of vertex
+    int getVertexCount() const;
+    
+    //returns the count of Edge
+    int getEdgeCount() const;
+
 };
 
 #include "Graph.tpp"
