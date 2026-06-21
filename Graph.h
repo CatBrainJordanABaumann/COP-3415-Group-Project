@@ -37,7 +37,7 @@ public:
     int getEdgeCount() const;
 
     //returns vertex index, and -1 if the vertex DNE
-    int getVertex(T data);
+    int getVertex(T data) const;
 
 };
 

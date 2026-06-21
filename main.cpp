@@ -1,25 +1,10 @@
 #include <iostream>
 #include "MinHeap.h"
+#include "CSVReader.h"
 
 int main() {
-    std::cout << "Hello World" << std::endl;
+Graph<string> graph;
 
-    MinHeap<int> testHeap;
-    std::cout << "Values: ";
-    for (int i = 0; i < 50; i++) {
-        int value = rand() % 100;
-        std::cout << value << ' ';
-        testHeap.push(value);
-    }
-
-    std::cout << std::endl << "Min Heap: ";
-    testHeap.print();
-
-    std::cout << "\nHeapified: ";
-    while (!testHeap.empty())
-        std::cout << testHeap.pop() << ' ';
-
-    std::cout << std::endl;
-
+CSVReader::loadGraph(graph, "airports.csv");
     return 0;
 }

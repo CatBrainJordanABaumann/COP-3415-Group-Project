@@ -1,6 +1,6 @@
 #pragma once
 #include "Graph.h"
-
+#include <iostream>
 //Initializes graph storage of elements
 template <typename T>
 Graph<T>::Graph(int vertexCapacity, int edgeCapacity) :
