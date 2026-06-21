@@ -1,5 +1,13 @@
 #include "Edge.h"
 
+//default constructor sets all to 0
+Edge::Edge()
+{
+    startIndex = 0;
+    endIndex = 0;
+    distance = 0;
+    cost = 0;
+}
 //Edge constructor intializes information
 Edge::Edge(int start, int end, int dist, int cst)
 {

@@ -11,10 +11,17 @@ private:
 
 public:
     //Edge function declarations
+
+    //default constructor for edge
+    Edge();
+
+    //param constructor for edge
     Edge(int start, int end, int dist, int cst);
 
+    //returns start index
     int getStart() const;
 
+    //returns end index
     int getEnd() const;
     //used for shortest path calculations
     int getDistance() const;
