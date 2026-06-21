@@ -23,6 +23,12 @@ Graph<T>::Graph(int vertexCapacity, int edgeCapacity) :
 template <typename T>
 void Graph<T>::pushVertex(T data) 
 {
+    //if vertex exist do not push it again
+    if(getVertex(data) != -1)
+    {
+        return;
+    }
+
     if (vertexCount >= vertexCapacity) {
         std::cout << "Vertex Overflow" << std::endl;
         throw "Vertex Overflow";
@@ -51,4 +57,19 @@ template <typename T>
 int Graph<T>::getEdgeCount() const
 {
     return edgeCount;
+}
+
+template <typename T>
+int Graph<T>::getVertex(T data) const
+{
+    //for loop checks every availble index to see if that vertex already exist
+    for(int i = 0; i < vertexCount; i++)
+    {
+        if(vertices[i] == data)
+        {
+            return i;
+        }
+    }
+    //return -1 if vertex does not exist
+    return -1;
 }

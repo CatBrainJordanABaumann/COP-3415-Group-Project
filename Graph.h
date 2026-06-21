@@ -36,6 +36,9 @@ public:
     //returns the count of Edge
     int getEdgeCount() const;
 
+    //returns vertex index, and -1 if the vertex DNE
+    int getVertex(T data);
+
 };
 
 #include "Graph.tpp"
