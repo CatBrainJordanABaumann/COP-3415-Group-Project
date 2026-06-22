@@ -58,6 +58,29 @@ int Graph<T>::getEdgeCount() const
     return totalEdgeCount;
 }
 
+// Returns edges exiting from a given vertex
+template <typename T>
+int Graph<T>::getOutgoingEdgeCount(int vertex) const
+{
+    return vertexEdgeCounts[vertex];
+}
+
+// Returns edges ending at a given vertex
+template <typename T>
+int Graph<T>::getIncomingEdgeCount(int vertex) const
+{
+    int result = 0;
+    // Iterate over every vertex
+    for (int i = 0; i < vertexCount; i++)
+        // Iterate over every edge of each vertex
+        for (int j = 0; j < vertexEdgeCounts[i]; j++)
+            // Check if vertex ends at desired
+            if (edges[i][j].getEnd() == vertex)
+                result++;
+    
+    return result;
+}
+
 template <typename T>
 int Graph<T>::getVertex(T data) const
 {

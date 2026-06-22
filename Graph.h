@@ -42,6 +42,12 @@ public:
     // Returns the count of Edge
     int getEdgeCount() const;
 
+    // Returns edges exiting from a given vertex
+    int getOutgoingEdgeCount(int vertex) const;
+
+    // Returns edges ending at a given vertex
+    int getIncomingEdgeCount(int vertex) const;
+
     // Returns vertex index, and -1 if the vertex DNE
     int getVertex(T data) const;
 
@@ -50,9 +56,14 @@ public:
     void minDistance();
     // Sets edge comparison to use cost
     void minCost();
+    
+    // Converts directed graph to an undirected version
+    // Creates a two way edge if one or two edges existed
+    Graph toUndirected();
 
     // Returns path of indices from start to end indices
     std::vector<int> djikstraMinPath(int startIndex, int endIndex);
+
 };
 
 #include "Graph.tpp"
