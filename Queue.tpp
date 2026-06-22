@@ -11,6 +11,14 @@ Queue<T>::Queue()
     queueSize = 0;
 }
 
+// Dequeues every item 
+template <typename T>
+Queue<T>::~Queue()
+{
+    while (!isEmpty())
+        dequeue();
+}
+
 //adds new item to end of a queue
 template <typename T>
 void Queue<T>::enqueue(T value)

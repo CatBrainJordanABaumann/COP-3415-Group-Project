@@ -17,6 +17,7 @@ private:
 //queue fucntion declarations
 public:
     Queue();
+    ~Queue();
 
     void enqueue(T value);
     void dequeue();

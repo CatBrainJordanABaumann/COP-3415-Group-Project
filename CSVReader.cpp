@@ -5,7 +5,7 @@
 #include <vector>
 
 //parses one CSV row and adds the flight data into the graph
-void CSVReader::parseLine(Graph<Airport>& graph, const std::string& line)
+void parseLine(Graph<Airport>& graph, const std::string& line)
 {
     //gets airport codes "Abreviated Names Ex: ABQ"
     std::string origin = line.substr(0, 3);
