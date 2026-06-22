@@ -1,5 +1,7 @@
 #pragma once
 #include "Graph.h"
+#include "Stack.h"
+#include "Queue.h"
 #include <iostream>
 
 //Initializes graph storage of elements
@@ -15,6 +17,24 @@ Graph<T>::Graph(int vertexCapacity, int edgeCapacity) :
     //allocates memory for edge storage
     for(int i = 0; i < vertexCapacity; i++)
         edges[i] = new Edge[edgeCapacity];
+}
+
+template <typename T>
+Graph<T>::~Graph() {
+    if (vertices) {
+        delete[] vertices;
+        vertices = nullptr;
+    }
+    if (edges) {
+        for (int i = 0; i < vertexCapacity; i++)
+            delete[] edges[i];
+        delete[] edges;
+        edges = nullptr;
+    }
+    if (vertexEdgeCounts) {
+        delete[] vertexEdgeCounts;
+        vertexEdgeCounts = nullptr;
+    }
 }
 
 //adds a vertex to the graph
@@ -126,7 +146,7 @@ void Graph<T>::minCost() {
 // Converts directed graph to an undirected version
 // Creates a two way edge if one or two edges existed
 template <typename T>
-Graph<T> Graph<T>::toUndirected() {
+Graph<T> Graph<T>::toUndirected() const {
     Graph<T> result(vertexCapacity, edgeCapacity);
 
     for (int i = 0; i < vertexCount; i++)
@@ -140,4 +160,78 @@ Graph<T> Graph<T>::toUndirected() {
             result.pushEdge(edges[i][j].getEnd(), i,
                 edges[i][j].getDistance(), edges[i][j].getCost());
         }
+}
+
+// Creates a copy of the graph found using BFS
+template <typename T>
+Graph<T> Graph<T>::toBFS() const {
+    Graph<T> result(vertexCapacity, edgeCapacity);
+
+    if (vertexCount <= 0)
+        return result;
+
+    for (int i = 0; i < vertexCount; i++)
+        result.pushVertex(vertices[i]);
+
+    int totalVisited = 0;
+    bool* visited = new bool[vertexCount]();
+    visited[0] = true;
+
+    Queue<int> toVisit;
+    toVisit.enqueue(0);
+    
+    while (!toVisit.isEmpty() && totalVisited < vertexCount - 1) {
+        int current = toVisit.dequeue();
+
+        for (int i = 0; i < vertexEdgeCounts[current]; i++) {
+            int currentEnd = edges[current][i].getEnd();
+            if (visited[currentEnd])
+                continue;
+        
+            visited[currentEnd] = true;
+            toVisit.enqueue(currentEnd);
+            totalVisited++;
+            result.pushEdge(current, currentEnd,
+                edges[current][i].getDistance(), edges[current][i].getCost());
+        }
+    }
+
+    delete visited;
+}
+
+// Creates a copy of the graph found using DFS
+template <typename T>
+Graph<T> Graph<T>::toDFS() const {
+    Graph<T> result(vertexCapacity, edgeCapacity);
+
+    if (vertexCount <= 0)
+        return result;
+
+    for (int i = 0; i < vertexCount; i++)
+        result.pushVertex(vertices[i]);
+
+    int totalVisited = 0;
+    bool* visited = new bool[vertexCount]();
+    visited[0] = true;
+
+    Stack<int> toVisit;
+    toVisit.push(0);
+
+    while (!toVisit.isEmpty() && totalVisited < vertexCount - 1) {
+        int current = toVisit.pop();
+
+        for (int i = 0; i < vertexEdgeCounts[current]; i++) {
+            int currentEnd = edges[current][i].getEnd();
+            if (visited[currentEnd])
+                continue;
+        
+            visited[currentEnd] = true;
+            toVisit.push(currentEnd);
+            totalVisited++;
+            result.pushEdge(current, currentEnd,
+                edges[current][i].getDistance(), edges[current][i].getCost());
+        }
+    }
+
+    delete visited;
 }

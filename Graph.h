@@ -29,6 +29,8 @@ public:
     // Graph function declarations
     Graph(int vertexCapacity = DEFAULT_MAX_GRAPH_VERTEX_CAPACITY,
         int edgeCapacity = DEFAULT_MAX_GRAPH_EDGE_CAPACITY);
+    
+    ~Graph();
 
     // Adds a new airport vertex
     void pushVertex(T data);
@@ -59,7 +61,13 @@ public:
     
     // Converts directed graph to an undirected version
     // Creates a two way edge if one or two edges existed
-    Graph toUndirected();
+    Graph toUndirected() const;
+
+    // Creates a copy of the graph found using BFS
+    Graph toBFS() const;
+
+    // Creates a copy of the graph found using DFS
+    Graph toDFS() const;
 
     // Returns path of indices from start to end indices
     std::vector<int> djikstraMinPath(int startIndex, int endIndex);

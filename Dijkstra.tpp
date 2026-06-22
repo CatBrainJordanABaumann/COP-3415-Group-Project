@@ -47,5 +47,10 @@ std::vector<int> Graph<T>::djikstraMinPath(int startIndex, int endIndex) {
         currentVertex = bestEdge.getEnd();
     }
 
-    return paths[endIndex];
+    std::vector<int> result = paths[endIndex];
+
+    delete visited;
+    delete distances;
+    delete paths;
+    return result;
 }
