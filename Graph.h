@@ -11,9 +11,9 @@ template <typename T>
 class Graph
 {
 private:
-    //Stores the vertices for the airport
+    // Stores the vertices for the airport
     T* vertices;
-    //Stores the Flight connections
+    // Stores the Flight connections
     Edge** edges;
     // Stores the current vertex and edge counts
     int vertexCount, totalEdgeCount;
@@ -26,23 +26,23 @@ private:
     void setUseDistance(bool useDistance);
 
 public:
-    //graph function declarations
+    // Graph function declarations
     Graph(int vertexCapacity = DEFAULT_MAX_GRAPH_VERTEX_CAPACITY,
         int edgeCapacity = DEFAULT_MAX_GRAPH_EDGE_CAPACITY);
 
-    //adds a new airport vertex
+    // Adds a new airport vertex
     void pushVertex(T data);
 
-    //adds a flight connection with distance and cost set as weights
+    // Adds a flight connection with distance and cost set as weights
     void pushEdge(int index1, int index2, int distance, int cost);
 
-    //returns the count of vertex
+    // Returns the count of vertex
     int getVertexCount() const;
     
-    //returns the count of Edge
+    // Returns the count of Edge
     int getEdgeCount() const;
 
-    //returns vertex index, and -1 if the vertex DNE
+    // Returns vertex index, and -1 if the vertex DNE
     int getVertex(T data) const;
 
     
@@ -50,6 +50,10 @@ public:
     void minDistance();
     // Sets edge comparison to use cost
     void minCost();
+
+    // Returns path of indices from start to end indices
+    std::vector<int> djikstraMinPath(int startIndex, int endIndex);
 };
 
 #include "Graph.tpp"
+#include "Djikstra.tpp"
