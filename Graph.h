@@ -15,11 +15,15 @@ private:
     T* vertices;
     //Stores the Flight connections
     Edge** edges;
+    // Stores the current vertex and edge counts
+    int vertexCount, totalEdgeCount;
     // Stores the amount of edges each vertex has
-    int* vertexNeighborCounts;
-    //stores the current counts and max capacity
-    int vertexCount, edgeCount,
-        vertexCapacity, edgeCapacity;
+    int* vertexEdgeCounts;
+    // Stores the capacities of this object
+    int vertexCapacity, edgeCapacity;
+
+    // Sets edge comparison mode. True is distance false is cost
+    void setUseDistance(bool useDistance);
 
 public:
     //graph function declarations
@@ -41,6 +45,11 @@ public:
     //returns vertex index, and -1 if the vertex DNE
     int getVertex(T data) const;
 
+    
+    // Sets edge comparison to use distance
+    void minDistance();
+    // Sets edge comparison to use cost
+    void minCost();
 };
 
 #include "Graph.tpp"

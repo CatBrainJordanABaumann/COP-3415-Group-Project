@@ -27,12 +27,16 @@ int Edge::getCost() const
 }
 
 
+void Edge::setUseDistance(bool useDistance) {
+    this->useDistance = useDistance;
+}
+
 void Edge::minDistance() {
-    useDistance = true;
+    setUseDistance(true);
 }
 
 void Edge::minCost() {
-    useDistance = false;
+    setUseDistance(false);
 }
 
 

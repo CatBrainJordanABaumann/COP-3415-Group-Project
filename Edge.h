@@ -10,6 +10,9 @@ private:
     int startIndex, endIndex, distance, cost;
     bool useDistance;
 
+    // Sets edge comparison mode. True is distance false is cost
+    void setUseDistance(bool useDistance);
+
 public:
     //Edge function declarations
 
