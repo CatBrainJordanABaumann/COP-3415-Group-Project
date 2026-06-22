@@ -3,11 +3,16 @@
 #include "CSVReader.h"
 
 int main() {
-    Graph<string> graph;
+    Graph<Airport> graph;
 
     CSVReader::loadGraph(graph, "airports.csv");
-    cout << "Vertices: " << graph.getVertexCount() << endl;
-    cout << "Edges: " << graph.getEdgeCount() << endl;
+    std::cout << "Vertices: " << graph.getVertexCount() << std::endl;
+    std::cout << "Edges: " << graph.getEdgeCount() << std::endl;
+
+    //graph.setPrintCode(true);
+    //graph.print();
+    //graph.setPrintCode(false);
+    //graph.print();
     
     return 0;
 }

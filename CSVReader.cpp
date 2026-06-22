@@ -4,70 +4,39 @@
 #include <iostream>
 #include <vector>
 
-//stores airport information 
-vector<Airport> airportList;
-
-//checks if airport already exist in the list
-bool airportExists(string code)
-{
-    for (int i = 0; i < airportList.size(); i++)
-    {
-        if (airportList[i].code == code)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 //parses one CSV row and adds the flight data into the graph
-void CSVReader::parseLine(Graph<string>& graph, string line)
+void CSVReader::parseLine(Graph<Airport>& graph, const std::string& line)
 {
     //gets airport codes "Abreviated Names Ex: ABQ"
-    string origin = line.substr(0, 3);
-    string destination = line.substr(4, 3);
+    std::string origin = line.substr(0, 3);
+    std::string destination = line.substr(4, 3);
 
     //find the origins city
     int firstQuote = line.find('"');
     int secondQuote = line.find('"', firstQuote + 1);
 
     //finds origin city location
-    string originCity = line.substr(firstQuote + 1, secondQuote - firstQuote - 1);
+    std::string originCity = line.substr(firstQuote + 1, secondQuote - firstQuote - 1);
 
     //gets origin city and state
-    string originState = originCity.substr(originCity.size() - 2);
+    std::string originState = originCity.substr(originCity.size() - 2);
 
     //find desination city location
     int thirdQuote = line.find('"', secondQuote + 1);
     int fourthQuote = line.find('"', thirdQuote + 1);
 
     //find desination city and state
-    string destinationCity = line.substr(thirdQuote + 1, fourthQuote - thirdQuote - 1);
+    std::string destinationCity = line.substr(thirdQuote + 1, fourthQuote - thirdQuote - 1);
     
     //add orgin airport Data
-    string destinationState = destinationCity.substr(destinationCity.size() - 2);   
-    if (!airportExists(origin))
-    {
-        Airport airport;
-        airport.code = origin;
-        airport.state = originState;
-        airportList.push_back(airport);
-    }
+    std::string destinationState = destinationCity.substr(destinationCity.size() - 2);
 
-    //adds desination Data
-    if (!airportExists(destination))
-    {
-        Airport airport;
-        airport.code = destination;
-        airport.state = destinationState;
-
-        airportList.push_back(airport);
-    }    
+    Airport originAirport(origin, originState);
+    Airport destinationAirport(destination, destinationState);
 
     // add airports if they do not exist
-    graph.pushVertex(origin);
-    graph.pushVertex(destination);
+    graph.pushVertex(originAirport);
+    graph.pushVertex(destinationAirport);
 
     // find distance and cost location
     int lastComma = line.rfind(',');
@@ -77,9 +46,9 @@ void CSVReader::parseLine(Graph<string>& graph, string line)
     int start = graph.getVertex(origin);
     int end = graph.getVertex(destination);
 
-    string distanceStr = line.substr(secondLastComma + 1, lastComma - secondLastComma - 1);
+    std::string distanceStr = line.substr(secondLastComma + 1, lastComma - secondLastComma - 1);
 
-    string costStr = line.substr(lastComma + 1);
+    std::string costStr = line.substr(lastComma + 1);
     int distance = stoi(distanceStr);
     int cost = stoi(costStr);
 
@@ -87,11 +56,11 @@ void CSVReader::parseLine(Graph<string>& graph, string line)
     graph.pushEdge(start, end, distance, cost);
 }
 
-void CSVReader::loadGraph(Graph<string>& graph, string filename)
+void CSVReader::loadGraph(Graph<Airport>& graph, const std::string& filename)
 {
-    ifstream file(filename);
+    std::ifstream file(filename);
 
-    string line;
+    std::string line;
 
     // skip header in the CSV
     getline(file, line);

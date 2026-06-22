@@ -2,15 +2,14 @@
 
 #include <string>
 #include "Graph.h"
-
-using namespace std;
+#include "Airport.h"
 
 class CSVReader
 {
 private:
-    static void parseLine(Graph<string>& graph, string line);
+    static void parseLine(Graph<Airport>& graph, const std::string& line);
 
 public:
-    static void loadGraph(Graph<string>& graph, string filename);
+    static void loadGraph(Graph<Airport>& graph, const std::string& filename);
 };
 

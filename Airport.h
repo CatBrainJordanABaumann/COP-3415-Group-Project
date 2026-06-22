@@ -8,4 +8,6 @@ struct Airport {
     bool useCode;
 
     Airport(const std::string& code = "", const std::string& state = "");
+
+    bool operator==(const Airport& other) const;
 };
