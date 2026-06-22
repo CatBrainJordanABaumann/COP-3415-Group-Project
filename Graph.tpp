@@ -1,7 +1,9 @@
 #pragma once
+
 #include "Graph.h"
 #include "Stack.h"
 #include "Queue.h"
+#include "Airport.h"
 #include <iostream>
 
 //Initializes graph storage of elements
@@ -143,6 +145,20 @@ void Graph<T>::minCost() {
 }
 
 
+// Prints each element in a path seperated by a delimiter
+template <typename T>
+void Graph<T>::printPath(const std::vector<int>& path,
+    std::string delimiter) const {
+    if (path.empty())
+        return;
+    
+    std::cout << path[0];
+    for (int i = 1; i < path.size(); i++)
+        std::cout << delimiter << path[i];
+    std::cout << std::endl;
+}
+
+
 // Converts directed graph to an undirected version
 // Creates a two way edge if one or two edges existed
 template <typename T>
@@ -234,4 +250,16 @@ Graph<T> Graph<T>::toDFS() const {
     }
 
     delete visited;
+}
+
+
+// Only implemented for Graph<Airport>
+template <typename T>
+void Graph<T>::setPrintCode(bool useCode) { }
+
+// Sets if each airport vertex should print its code or state
+template <>
+inline void Graph<Airport>::setPrintCode(bool useCode) {
+    for (int i = 0; i < vertexCount; i++)
+        vertices[i].useCode = useCode;
 }

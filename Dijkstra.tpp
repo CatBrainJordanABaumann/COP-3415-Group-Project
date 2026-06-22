@@ -4,7 +4,8 @@
 #include "Graph.h"
 
 template <typename T>
-std::vector<int> Graph<T>::djikstraMinPath(int startIndex, int endIndex) {
+std::vector<int> Graph<T>::djikstraMinPath(
+    int startIndex, int endIndex, int maxStops) const {
     minDistance();
 
     bool* visited = new bool[vertexCount]();
@@ -26,7 +27,8 @@ std::vector<int> Graph<T>::djikstraMinPath(int startIndex, int endIndex) {
             Edge& currentEdge = edges[currentVertex][i].getEnd();
             int currentEnd = currentEdge.getEnd();
 
-            if (visited[currentEnd])
+            if (visited[currentEnd] ||
+                (maxStops != -1 && paths[currentVertex].size() > maxStops))
                 continue;
             
             toSearch.push(currentEdge);
@@ -52,5 +54,5 @@ std::vector<int> Graph<T>::djikstraMinPath(int startIndex, int endIndex) {
     delete visited;
     delete distances;
     delete paths;
-    return result;
+    return result.size() > 1 ? result : std::vector<int>{};
 }

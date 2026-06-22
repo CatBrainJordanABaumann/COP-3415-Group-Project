@@ -58,6 +58,12 @@ public:
     void minDistance();
     // Sets edge comparison to use cost
     void minCost();
+
+    void print() const;
+
+    // Prints each element in a path seperated by a delimiter
+    void printPath(const std::vector<int>& path,
+        std::string delimiter = " -> ") const;
     
     // Converts directed graph to an undirected version
     // Creates a two way edge if one or two edges existed
@@ -69,10 +75,25 @@ public:
     // Creates a copy of the graph found using DFS
     Graph toDFS() const;
 
-    // Returns path of indices from start to end indices
-    std::vector<int> djikstraMinPath(int startIndex, int endIndex);
+    //Generates a minimum spanning tree using prim's algorthim
+    Graph prim(int& totalCost);
 
+    //generates a minimum spanning tree using kruska's algorithim
+    Graph kruskal(int& totalCost);
+
+    // Returns path of indices from start to end indices
+    // Discards paths that take over maxStops stops
+    // If maxStops is negative then it has unlimited stops
+    // Returns {} if no valid path found
+    std::vector<int> djikstraMinPath(
+        int startIndex, int endIndex, int maxStops = -1) const;
+
+    // Only implemented for Graph<Airport>
+    // Sets if each airport vertex should print its code or state
+    void setPrintCode(bool useCode);
 };
 
 #include "Graph.tpp"
+#include "Prim.tpp"
+#include "Kruscal.tpp"
 #include "Dijkstra.tpp"

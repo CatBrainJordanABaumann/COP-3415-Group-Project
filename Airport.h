@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
-using namespace std;
 
-struct Airport
-{
-    string code;
-    string state;
+struct Airport {
+    std::string code;
+    std::string state;
+    bool useCode;
+
+    Airport(const std::string& code = "", const std::string& state = "");
 };
