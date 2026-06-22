@@ -2,8 +2,9 @@
 
 #include <string>
 using namespace std;
-class Airport
+
+struct Airport
 {
+    string code;
+    string state;
 };
-
-
