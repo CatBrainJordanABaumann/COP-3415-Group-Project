@@ -131,7 +131,11 @@ void Graph<T>::setUseDistance(bool useDistance) {
         // Iterate over every edge of each vertex
         for (int j = 0; j < vertexEdgeCounts[i]; j++)
             // Set them to the proper function
-            edges[i][j].useDistance(useDistance);
+            if (useDistance)
+                edges[i][j].minDistance();
+            else
+                edges[i][j].minCost();
+            
 }
 
 template <typename T>
@@ -195,6 +199,7 @@ Graph<T> Graph<T>::toUndirected() const {
             result.pushEdge(edges[i][j].getEnd(), i,
                 edges[i][j].getDistance(), edges[i][j].getCost());
         }
+    return result;
 }
 
 // Creates a copy of the graph found using BFS
@@ -216,7 +221,8 @@ Graph<T> Graph<T>::toBFS() const {
     toVisit.enqueue(0);
     
     while (!toVisit.isEmpty() && totalVisited < vertexCount - 1) {
-        int current = toVisit.dequeue();
+        int current = toVisit.peek();
+        toVisit.dequeue();
 
         for (int i = 0; i < vertexEdgeCounts[current]; i++) {
             int currentEnd = edges[current][i].getEnd();
@@ -231,7 +237,8 @@ Graph<T> Graph<T>::toBFS() const {
         }
     }
 
-    delete visited;
+    delete[] visited;
+    return result;
 }
 
 // Creates a copy of the graph found using DFS
@@ -253,7 +260,8 @@ Graph<T> Graph<T>::toDFS() const {
     toVisit.push(0);
 
     while (!toVisit.isEmpty() && totalVisited < vertexCount - 1) {
-        int current = toVisit.pop();
+        int current = toVisit.peek();
+        toVisit.pop();
 
         for (int i = 0; i < vertexEdgeCounts[current]; i++) {
             int currentEnd = edges[current][i].getEnd();
@@ -268,7 +276,8 @@ Graph<T> Graph<T>::toDFS() const {
         }
     }
 
-    delete visited;
+    delete[] visited;
+    return result;
 }
 
 
