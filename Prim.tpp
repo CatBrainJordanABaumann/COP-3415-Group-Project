@@ -3,6 +3,7 @@
 #include "Graph.h"
 #include "MinHeap.h"
 #include "DisjointSet.h"
+#include <iostream>
 
 template <typename T>
 Graph<T> Graph<T>::prim(int& totalCost)
@@ -69,6 +70,15 @@ Graph<T> Graph<T>::prim(int& totalCost)
                 edges[destination][i]
             );
         }
+    }
+
+    int totalVisited = 0;
+    for (int i = 0; i < vertexCount; i++)
+        if (visited[i])
+            totalVisited++;
+
+    if (totalVisited < vertexCount) {
+        std::cout << "Graph is disconnected. MST cannot be formed." << std::endl;
     }
 
     delete[] visited;

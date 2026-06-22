@@ -19,6 +19,7 @@ private:
 public:
     MinHeap(int capacity = DEFAULT_MAX_HEAP_CAPACITY);
     MinHeap(T* data, int size, int capacity = DEFAULT_MAX_HEAP_CAPACITY);
+    ~MinHeap();
     
     bool empty() const;
 

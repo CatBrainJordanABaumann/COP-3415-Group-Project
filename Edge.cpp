@@ -3,9 +3,11 @@
 //Edge constructor intializes information
 Edge::Edge(int startIndex, int endIndex, int distance, int cost) :
     startIndex(startIndex), endIndex(endIndex),
-    distance(distance), cost(cost) { }
+    distance(distance), cost(cost),
+    useDistance(true){ }
+    
 
-//getters for an Edge
+//getters return respective data
 int Edge::getStart() const
 {
     return startIndex;
@@ -27,15 +29,15 @@ int Edge::getCost() const
 }
 
 
-void Edge::setUseDistance(bool useDistance) {
+void Edge::setUseDistance(bool useDistance) const {
     this->useDistance = useDistance;
 }
 
-void Edge::minDistance() {
+void Edge::minDistance() const {
     setUseDistance(true);
 }
 
-void Edge::minCost() {
+void Edge::minCost() const {
     setUseDistance(false);
 }
 

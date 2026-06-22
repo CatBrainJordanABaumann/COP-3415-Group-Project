@@ -23,7 +23,7 @@ private:
     int vertexCapacity, edgeCapacity;
 
     // Sets edge comparison mode. True is distance false is cost
-    void setUseDistance(bool useDistance);
+    void setUseDistance(bool useDistance) const;
 
 public:
     // Graph function declarations
@@ -53,18 +53,19 @@ public:
     // Returns vertex index, and -1 if the vertex DNE
     int getVertex(T data) const;
 
-    
+    void printConnectionCounts() const;
+
     // Sets edge comparison to use distance
-    void minDistance();
+    void minDistance() const;
     // Sets edge comparison to use cost
-    void minCost();
+    void minCost() const;
 
     // Displays the entire graph
     void print() const;
 
     // Prints each element in a path seperated by a delimiter
     void printPath(const std::vector<int>& path,
-        std::string delimiter = " -> ") const;
+        std::string delimiter = " -> ", bool newline = true) const;
     
     // Converts directed graph to an undirected version
     // Creates a two way edge if one or two edges existed
@@ -88,10 +89,21 @@ public:
     // Returns {} if no valid path found
     std::vector<int> djikstraMinPath(
         int startIndex, int endIndex, int maxStops = -1) const;
+        
+    //total flight path along a distance
+    int getPathDistance(const std::vector<int>& path) const;
+
+    // Returns the total cost along a given path of vertex indices
+    int getPathCost(const std::vector<int>& path) const;
+
+    // prints shortest path from one airport to every airport in a state
+    void shortestPathsToState(int startIndex, const std::string& destState) const;
 
     // Only implemented for Graph<Airport>
     // Sets if each airport vertex should print its code or state
     void setPrintCode(bool useCode);
+
+
 };
 
 #include "Graph.tpp"

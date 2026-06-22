@@ -21,6 +21,7 @@ Graph<T>::Graph(int vertexCapacity, int edgeCapacity) :
         edges[i] = new Edge[edgeCapacity];
 }
 
+//destructor implimentaion
 template <typename T>
 Graph<T>::~Graph() {
     if (vertices) {
@@ -125,7 +126,41 @@ int Graph<T>::getVertex(T data) const
 }
 
 template <typename T>
-void Graph<T>::setUseDistance(bool useDistance) {
+void Graph<T>::printConnectionCounts() const {
+    int* totalCounts = new int[vertexCount];
+    int* order = new int[vertexCount];
+
+    for (int i = 0; i < vertexCount; i++) {
+        totalCounts[i] = getOutgoingEdgeCount(i) + getIncomingEdgeCount(i);
+        order[i] = i;
+    }
+
+    // simple insertion sort, descending by totalCounts
+    for (int i = 1; i < vertexCount; i++) {
+        int key = order[i];
+        int keyCount = totalCounts[key];
+        int j = i - 1;
+
+        while (j >= 0 && totalCounts[order[j]] < keyCount) {
+            order[j + 1] = order[j];
+            j--;
+        }
+        order[j + 1] = key;
+    }
+
+    std::cout << "Airport Connections" << std::endl;
+    for (int i = 0; i < vertexCount; i++) {
+        int vertexIndex = order[i];
+        std::cout << vertices[vertexIndex] << " "
+            << totalCounts[vertexIndex] << std::endl;
+    }
+
+    delete[] totalCounts;
+    delete[] order;
+}
+
+template <typename T>
+void Graph<T>::setUseDistance(bool useDistance) const{
     // Iterate over every vertex
     for (int i = 0; i < vertexCount; i++)
         // Iterate over every edge of each vertex
@@ -139,12 +174,12 @@ void Graph<T>::setUseDistance(bool useDistance) {
 }
 
 template <typename T>
-void Graph<T>::minDistance() {
+void Graph<T>::minDistance() const{
     setUseDistance(true);
 }
 
 template <typename T>
-void Graph<T>::minCost() {
+void Graph<T>::minCost() const{
     setUseDistance(false);
 }
 
@@ -171,14 +206,15 @@ void Graph<T>::print() const {
 // Prints each element in a path seperated by a delimiter
 template <typename T>
 void Graph<T>::printPath(const std::vector<int>& path,
-    std::string delimiter) const {
+    std::string delimiter, bool newline) const {
     if (path.empty())
         return;
     
-    std::cout << path[0];
-    for (int i = 1; i < path.size(); i++)
-        std::cout << delimiter << path[i];
-    std::cout << std::endl;
+    std::cout << vertices[path[0]];
+    for (int i = 1; i < (int)path.size(); i++)
+        std::cout << delimiter << vertices[path[i]];
+    if (newline)
+        std::cout << std::endl;
 }
 
 
@@ -190,15 +226,36 @@ Graph<T> Graph<T>::toUndirected() const {
 
     for (int i = 0; i < vertexCount; i++)
         result.pushVertex(vertices[i]);
-    
-    
-    for (int i = 0; i < vertexCount; i++)
+
+    bool* pairDone = new bool[vertexCount * vertexCount]();
+
+    for (int i = 0; i < vertexCount; i++) {
         for (int j = 0; j < vertexEdgeCounts[i]; j++) {
-            result.pushEdge(i, edges[i][j].getEnd(),
-                edges[i][j].getDistance(), edges[i][j].getCost());
-            result.pushEdge(edges[i][j].getEnd(), i,
-                edges[i][j].getDistance(), edges[i][j].getCost());
+            int otherVertex = edges[i][j].getEnd();
+
+            if (pairDone[i * vertexCount + otherVertex] ||
+                pairDone[otherVertex * vertexCount + i])
+                continue;
+
+            int costToUse = edges[i][j].getCost();
+
+            for (int k = 0; k < vertexEdgeCounts[otherVertex]; k++) {
+                if (edges[otherVertex][k].getEnd() == i) {
+                    if (edges[otherVertex][k].getCost() < costToUse)
+                        costToUse = edges[otherVertex][k].getCost();
+                    break;
+                }
+            }
+
+            result.pushEdge(i, otherVertex, 0, costToUse);
+            result.pushEdge(otherVertex, i, 0, costToUse);
+
+            pairDone[i * vertexCount + otherVertex] = true;
+            pairDone[otherVertex * vertexCount + i] = true;
         }
+    }
+
+    delete[] pairDone;
     return result;
 }
 
@@ -290,4 +347,66 @@ template <>
 inline void Graph<Airport>::setPrintCode(bool useCode) {
     for (int i = 0; i < vertexCount; i++)
         vertices[i].useCode = useCode;
+}
+
+template <typename T>
+int Graph<T>::getPathDistance(const std::vector<int>& path) const {
+    int total = 0;
+    for (int i = 0; i + 1 < (int)path.size(); i++) {
+        int from = path[i];
+        int to = path[i + 1];
+        for (int j = 0; j < vertexEdgeCounts[from]; j++) {
+            if (edges[from][j].getEnd() == to) {
+                total += edges[from][j].getDistance();
+                break;
+            }
+        }
+    }
+    return total;
+}
+
+template <typename T>
+int Graph<T>::getPathCost(const std::vector<int>& path) const {
+    int total = 0;
+    for (int i = 0; i + 1 < (int)path.size(); i++) {
+        int from = path[i];
+        int to = path[i + 1];
+        for (int j = 0; j < vertexEdgeCounts[from]; j++) {
+            if (edges[from][j].getEnd() == to) {
+                total += edges[from][j].getCost();
+                break;
+            }
+        }
+    }
+    return total;
+}
+
+template <typename T>
+void Graph<T>::shortestPathsToState(int startIndex, const std::string& destState) const {
+    bool foundAny = false;
+
+    std::cout << "Shortest paths from " << vertices[startIndex]
+        << " to " << destState << " state airports are:" << std::endl;
+    std::cout << "Path Length Cost" << std::endl;
+
+    for (int i = 0; i < vertexCount; i++) {
+        if (i == startIndex)
+            continue;
+        if (vertices[i].state != destState)
+            continue;
+
+        std::vector<int> path = djikstraMinPath(startIndex, i);
+        if (path.empty())
+            continue;
+
+        foundAny = true;
+
+        printPath(path, "->", false);
+        std::cout << " " << getPathDistance(path)
+            << " " << getPathCost(path) << std::endl;
+    }
+
+    if (!foundAny) {
+        std::cout << "No paths found to " << destState << " state airports." << std::endl;
+    }
 }

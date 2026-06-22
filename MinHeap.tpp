@@ -18,6 +18,10 @@ MinHeap<T>::MinHeap(T* data, int size, int capacity) :
         percolateDown(i);
 }
 
+template <typename T>
+MinHeap<T>::~MinHeap() {
+    delete[] data;
+}
 
 template <typename T>
 int MinHeap<T>::parent(int index) {
@@ -38,14 +42,13 @@ template <typename T>
 void MinHeap<T>::percolateDown(int index) {
     int leftIndex = leftChild(index),
         rightIndex = rightChild(index);
-    
+
     if (leftIndex >= size ||
-        (data[leftIndex] >= data[index] &&
-        (rightIndex >= size || data[rightIndex] >= data[index])))
+        (!(data[leftIndex] < data[index]) &&
+        (rightIndex >= size || !(data[rightIndex] < data[index]))))
         return;
-    
-    int minIndex = data[leftIndex] < data[rightIndex]
-        || rightIndex >= size
+
+    int minIndex = (rightIndex >= size || data[leftIndex] < data[rightIndex])
         ? leftIndex : rightIndex;
     
     std::swap(data[index], data[minIndex]);
@@ -56,13 +59,12 @@ template <typename T>
 void MinHeap<T>::percolateUp(int index) {
     int parentIndex = parent(index);
     if (parentIndex < 0 || index <= 0 ||
-        data[index] >= data[parentIndex])
+        !(data[index] < data[parentIndex]))
         return;
     
     std::swap(data[index], data[parentIndex]);
     percolateUp(parentIndex);
 }
-    
 
 template <typename T>
 bool MinHeap<T>::empty() const {

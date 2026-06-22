@@ -8,10 +8,12 @@ private:
     //distance -> Dijkstra
     //cost -> prim/kruskal
     int startIndex, endIndex, distance, cost;
-    bool useDistance;
+    
+    //mutable allows for calls to const functions
+    mutable bool useDistance;
 
     // Sets edge comparison mode. True is distance false is cost
-    void setUseDistance(bool useDistance);
+    void setUseDistance(bool useDistance) const;
 
 public:
     //Edge function declarations
@@ -33,9 +35,9 @@ public:
     void setCost(int cost);
 
     // Sets edge comparison to use distance
-    void minDistance();
+    void minDistance() const;
     // Sets edge comparison to use cost
-    void minCost();
+    void minCost() const;
 
     bool operator<(const Edge& other) const;
 }; 
