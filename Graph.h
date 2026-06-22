@@ -67,4 +67,4 @@ public:
 };
 
 #include "Graph.tpp"
-#include "Djikstra.tpp"
+#include "Dijkstra.tpp"
