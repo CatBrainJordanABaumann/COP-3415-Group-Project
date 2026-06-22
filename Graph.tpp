@@ -40,6 +40,15 @@ void Graph<T>::pushEdge(int start, int end, int distance, int cost)
         std::cout << "Edge Overflow" << std::endl;
         throw "Edge Overflow";
     }
+
+    // If the edge already exists then ignore
+    for (int i = 0; i < vertexEdgeCounts[start]; i++)
+        if (edges[start][i].getEnd() == end) {
+            if (edges[start][i].getCost() > cost)
+                edges[start][i].setCost(cost);
+            return;
+        }
+
     edges[start][vertexEdgeCounts[start]++] = Edge(start, end, distance, cost);
     totalEdgeCount++;
 }
@@ -111,4 +120,24 @@ void Graph<T>::minDistance() {
 template <typename T>
 void Graph<T>::minCost() {
     setUseDistance(false);
+}
+
+
+// Converts directed graph to an undirected version
+// Creates a two way edge if one or two edges existed
+template <typename T>
+Graph<T> Graph<T>::toUndirected() {
+    Graph<T> result(vertexCapacity, edgeCapacity);
+
+    for (int i = 0; i < vertexCount; i++)
+        result.pushVertex(vertices[i]);
+    
+    
+    for (int i = 0; i < vertexCount; i++)
+        for (int j = 0; j < vertexEdgeCounts[i]; j++) {
+            result.pushEdge(i, edges[i][j].getEnd(),
+                edges[i][j].getDistance(), edges[i][j].getCost());
+            result.pushEdge(edges[i][j].getEnd(), i,
+                edges[i][j].getDistance(), edges[i][j].getCost());
+        }
 }

@@ -29,6 +29,9 @@ public:
     //used for Minumum spanning tree calculations
     int getCost() const;
 
+    // Used for conversion from directed to undirected graphs
+    void setCost(int cost);
+
     // Sets edge comparison to use distance
     void minDistance();
     // Sets edge comparison to use cost

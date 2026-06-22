@@ -40,6 +40,11 @@ void Edge::minCost() {
 }
 
 
+void Edge::setCost(int cost) {
+    this->cost = cost;
+}
+
+
 bool Edge::operator<(const Edge& other) const {
     return useDistance ? distance < other.distance : cost < other.cost;
 }
