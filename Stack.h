@@ -19,5 +19,5 @@ public:
     bool isEmpty();
     int size();
 };
-#include "Stack.cpp"
+#include "Stack.tpp"
 #endif

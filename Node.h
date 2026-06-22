@@ -7,4 +7,5 @@ struct Node {
 
     Node(T data = T(), Node<T>* next = nullptr);
 };
-#include "Node.cpp"
+
+#include "Node.tpp"

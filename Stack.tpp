@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Stack.h"
     //intitializes a empty stack
     template <typename T>

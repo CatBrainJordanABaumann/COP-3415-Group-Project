@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Queue.h"
 
 //Intitializes empty queue

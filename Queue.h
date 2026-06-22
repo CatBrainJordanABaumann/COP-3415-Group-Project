@@ -27,5 +27,5 @@ public:
 
     int size();
 };
-#include "Queue.cpp"
+#include "Queue.tpp"
 #endif

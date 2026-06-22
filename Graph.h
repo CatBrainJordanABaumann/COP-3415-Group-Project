@@ -15,6 +15,8 @@ private:
     T* vertices;
     //Stores the Flight connections
     Edge** edges;
+    // Stores the amount of edges each vertex has
+    int* vertexNeighborCounts;
     //stores the current counts and max capacity
     int vertexCount, edgeCount,
         vertexCapacity, edgeCapacity;

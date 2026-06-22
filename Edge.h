@@ -8,15 +8,13 @@ private:
     //distance -> Dijkstra
     //cost -> prim/kruskal
     int startIndex, endIndex, distance, cost;
+    bool useDistance;
 
 public:
     //Edge function declarations
 
-    //default constructor for edge
-    Edge();
-
     //param constructor for edge
-    Edge(int start, int end, int dist, int cst);
+    Edge(int startIndex = 0, int endIndex = 0, int distance = 0, int cost = 0);
 
     //returns start index
     int getStart() const;
@@ -27,4 +25,11 @@ public:
     int getDistance() const;
     //used for Minumum spanning tree calculations
     int getCost() const;
+
+    // Sets edge comparison to use distance
+    void minDistance();
+    // Sets edge comparison to use cost
+    void minCost();
+
+    bool operator<(const Edge& other) const;
 }; 

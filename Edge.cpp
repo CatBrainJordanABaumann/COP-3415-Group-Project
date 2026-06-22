@@ -1,21 +1,9 @@
 #include "Edge.h"
 
-//default constructor sets all to 0
-Edge::Edge()
-{
-    startIndex = 0;
-    endIndex = 0;
-    distance = 0;
-    cost = 0;
-}
 //Edge constructor intializes information
-Edge::Edge(int start, int end, int dist, int cst)
-{
-    startIndex = start;
-    endIndex = end;
-    distance = dist;
-    cost = cst;
-}
+Edge::Edge(int startIndex, int endIndex, int distance, int cost) :
+    startIndex(startIndex), endIndex(endIndex),
+    distance(distance), cost(cost) { }
 
 //getters for an Edge
 int Edge::getStart() const
@@ -36,4 +24,18 @@ int Edge::getDistance() const
 int Edge::getCost() const
 {
     return cost;
+}
+
+
+void Edge::minDistance() {
+    useDistance = true;
+}
+
+void Edge::minCost() {
+    useDistance = false;
+}
+
+
+bool Edge::operator<(const Edge& other) const {
+    return useDistance ? distance < other.distance : cost < other.cost;
 }
