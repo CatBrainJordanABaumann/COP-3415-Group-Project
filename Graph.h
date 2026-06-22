@@ -59,6 +59,7 @@ public:
     // Sets edge comparison to use cost
     void minCost();
 
+    // Displays the entire graph
     void print() const;
 
     // Prints each element in a path seperated by a delimiter

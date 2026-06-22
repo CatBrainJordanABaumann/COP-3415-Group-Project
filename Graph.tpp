@@ -145,6 +145,25 @@ void Graph<T>::minCost() {
 }
 
 
+// Displays the entire graph
+template <typename T>
+void Graph<T>::print() const {
+    std::cout << "Vertices:" << std::endl;
+    for (int i = 0; i < vertexCount; i++)
+        std::cout << vertices[i] << std::endl;
+    
+    std::cout << "\nEdges:" << std::endl;
+    for (int i = 0; i < vertexCount; i++)
+        for (int j = 0; j < vertexEdgeCounts[i]; j++) {
+            const Edge& currentEdge = edges[i][j];
+            std::cout << vertices[i] << " -> "
+                << vertices[currentEdge.getEnd()]
+                << std::endl;
+        }
+    std::cout << std::endl;
+}
+
+
 // Prints each element in a path seperated by a delimiter
 template <typename T>
 void Graph<T>::printPath(const std::vector<int>& path,
