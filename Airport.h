@@ -11,3 +11,5 @@ struct Airport {
 
     bool operator==(const Airport& other) const;
 };
+
+std::ostream &operator<<(std::ostream &os, const Airport &airport);

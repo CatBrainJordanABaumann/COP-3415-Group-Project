@@ -9,10 +9,10 @@ int main() {
     std::cout << "Vertices: " << graph.getVertexCount() << std::endl;
     std::cout << "Edges: " << graph.getEdgeCount() << std::endl;
 
-    //graph.setPrintCode(true);
-    //graph.print();
-    //graph.setPrintCode(false);
-    //graph.print();
+    graph.setPrintCode(true);
+    graph.print();
+    graph.setPrintCode(false);
+    graph.print();
     
     return 0;
 }
