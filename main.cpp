@@ -89,7 +89,8 @@ int main() {
     Graph<Airport> undirected = graph.toUndirected();
     std::cout << "Undirected vertices: " << undirected.getVertexCount() << std::endl;
     // each undirected edge is stored as two directed entries internally
-    std::cout << "Undirected edges: " << undirected.getEdgeCount() / 2 << std::endl;
+    std::cout << "Undirected edges (one sided): "
+        << undirected.getEdgeCount() << std::endl;
     
     // Task 7: Prim's MST
     std::cout << "\n===== Task 7: Prim's MST =====" << std::endl;
