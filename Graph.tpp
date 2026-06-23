@@ -64,14 +64,6 @@ void Graph<T>::pushEdge(int start, int end, int distance, int cost)
         throw "Edge Overflow";
     }
 
-    // If the edge already exists then ignore
-    for (int i = 0; i < vertexEdgeCounts[start]; i++)
-        if (edges[start][i].getEnd() == end) {
-            if (edges[start][i].getCost() > cost)
-                edges[start][i].setCost(cost);
-            return;
-        }
-
     edges[start][vertexEdgeCounts[start]++] = Edge(start, end, distance, cost);
     totalEdgeCount++;
 }
