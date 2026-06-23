@@ -5,8 +5,8 @@
 int main() {
     Graph<Airport> graph;
 
-    // Task 1: build the graph from the CSV
-    CSVReader::loadGraph(graph, "airports.csv");
+    // Task 1: build the graph from the CSV/TXT
+    CSVReader::loadGraph(graph, "airports.txt");
     graph.setPrintCode(true);
 
     std::cout << "===== Task 1: Graph Construction =====" << std::endl;
